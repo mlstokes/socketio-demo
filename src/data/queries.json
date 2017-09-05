@@ -1,0 +1,4 @@
+{
+  "summaryQuery":
+  "select '2' as 'Sort', 'Shipments' as 'Link', 'Shipments' as 'Label', count(distinct(sh.INTERNAL_SHIPMENT_NUM)) [Data] from shipment_header sh (nolock) where sh.TRAILING_STS <= 300 Union select '1' as 'Sort', 'Orders' as 'Link', 'Orders' as 'Label', count(o.order_guid) from AM01SQL003.BUSINESSFLOW.DBO.MF_ORDERS_VIEW O WITH ( NOLOCK ) where o.catalog_name != 'DEV-Backerkit' and o.order_void = 0 and o.order_authorized = 1 and o.order_approved = 1 and o.order_suspended = 0 and o.order_closed = 0 order by Sort"
+}

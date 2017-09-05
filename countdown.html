@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+    <head>
+
+    </head>
+    <body>
+        <h1>Unfulfilled Orders</h1>
+        <div id="data">Loading Orders</div>
+        <p>
+        <div id="counter"></div>
+        <button id="reset">Reset!</button>
+
+      <script src="/jquery/dist/jquery.js"></script>
+      <script src="/socket.io/socket.io.js"></script>
+
+
+      <script>
+        var socket = io.connect('localhost:4400');
+        socket.on('connect', function (data) {
+          socket.emit('join', 'emitting from client');
+        });
+
+        socket.on('timer', function (data) {
+          //console.log(data);
+          $('#counter').html(data.countdown + ' seconds elapsed since counter reset');
+        });
+
+        socket.on('query', function (data) {
+          $('#data').html(data.queryData + ' Unfulfilled Orders');
+          console.log(data);
+        });
+
+        $('#reset').click(function () {
+          socket.emit('reset', 'RESET');
+        });
+      </script>
+
+    </body>
+</html>
